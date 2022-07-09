@@ -1,13 +1,20 @@
 import { FC, useCallback, useState } from "react";
-import useLongPress from "../../../hooks/useLongPress";
 import { Coordinates, Shape } from "../../../types";
 import { Drawings } from "../Drawings";
 import * as S from "./styles";
+// import { ref, set } from "firebase/database";
+// import db from "../../../utils/firebase";
 
 type Props = {
   shapeColor: string;
 };
 export const Whiteboard: FC<Props> = ({ shapeColor }) => {
+  // function writeUserData(userName: string, id: string) {
+  //   set(ref(db, "users/" + id), {
+  //     username: userName,
+  //     email: "test@test.cz",
+  //   });
+  // }
   const [globalCoords, setGlobalCoords] = useState<Coordinates>({ x: 0, y: 0 });
   const { x, y } = globalCoords;
   // const [localCoords, setLocalCoords] = useState<Coordinates>({ x: 0, y: 0 });
@@ -31,7 +38,6 @@ export const Whiteboard: FC<Props> = ({ shapeColor }) => {
     shouldPreventDefault: true,
     delay: 10,
   };
-  const longPressEvent = useLongPress(onLongPress, defaultOptions);
   // @TODO: types
   const handleMouseMove = useCallback((event: any) => {
     setGlobalCoords({
@@ -54,11 +60,7 @@ export const Whiteboard: FC<Props> = ({ shapeColor }) => {
 
   return (
     <S.Wrap
-      // {...longPressEvent}
       onMouseMove={handleMouseMove}
-      onTouchStart={(e) => {
-        console.log(e.shiftKey);
-      }}
       onMouseDown={(e) => {
         setUserIsDrawing(true);
         setNewShapeStart({
@@ -67,6 +69,7 @@ export const Whiteboard: FC<Props> = ({ shapeColor }) => {
         });
       }}
       onMouseUp={() => {
+        // writeUserData("steven", "1234");
         setUserIsDrawing(false);
         setNewShapeEnd({
           x,
@@ -77,11 +80,7 @@ export const Whiteboard: FC<Props> = ({ shapeColor }) => {
       <S.CurrentCoordinates>
         x: {x} y: {y}
       </S.CurrentCoordinates>
-      <Drawings
-        shapeProps={shapeProps}
-        isHighlighted={isHighlighted}
-        {...longPressEvent}
-      />
+      <Drawings shapeProps={shapeProps} isHighlighted={isHighlighted} />
     </S.Wrap>
   );
 };
