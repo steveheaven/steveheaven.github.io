@@ -7,6 +7,7 @@ const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "peer-paint-ffb42.firebaseapp.com",
   // The value of `databaseURL` depends on the location of the database
+  //
   databaseURL:
     "https://peer-paint-ffb42-default-rtdb.europe-west1.firebasedatabase.app/",
   projectId: "peer-paint-ffb42",
