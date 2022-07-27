@@ -6,6 +6,7 @@ import {
   useEffect,
   Dispatch,
   SetStateAction,
+  MouseEventHandler,
 } from "react";
 import { Coordinates, DrawLineParams } from "../../types";
 import {
@@ -21,14 +22,21 @@ import * as S from "./styles";
 import { ref, set } from "firebase/database";
 import db from "../../utils/firebase";
 
+export type DrawingProps = {
+  onMouseDown: MouseEventHandler<HTMLCanvasElement | HTMLInputElement>;
+  onMouseMove: MouseEventHandler<HTMLCanvasElement | HTMLInputElement>;
+  onMouseLeave: MouseEventHandler<HTMLCanvasElement>;
+  onMouseUp: MouseEventHandler<HTMLCanvasElement>;
+  width: number;
+  height: number;
+};
+
 type Props = {
   params: DrawingParams;
   onChange: Dispatch<SetStateAction<DrawingParams>>;
 };
-export const Whiteboard: FC<Props> = ({
-  params: { shape, strokeWidth: stroke, color },
-  onChange,
-}) => {
+export const Whiteboard: FC<Props> = ({ params, onChange }) => {
+  const { shape, strokeWidth: stroke, color } = params;
   const canvas = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
   const [context, setContext] = useState<CanvasRenderingContext2D>();
@@ -82,29 +90,30 @@ export const Whiteboard: FC<Props> = ({
     [canvas]
   );
 
-  const canvasProps = () => ({
+  const drawingProps: DrawingProps = {
     onMouseDown,
     onMouseMove,
     onMouseLeave,
     onMouseUp: onMouseLeave,
-    width: canvas.current?.offsetWidth,
+    width: canvas.current?.offsetWidth || 100,
     height: window.innerHeight,
-  });
+  };
 
   return (
     <>
       <S.NavWrap>
         <Navbar
-          stroke={stroke}
+          params={params}
           onChange={onChange}
           canvas={canvas}
           originalMousePosition={mousePosition}
+          drawingProps={drawingProps}
         />
         <S.ClearButton onClick={() => clearBoard(canvas)} color="red">
           Clear
         </S.ClearButton>
       </S.NavWrap>
-      <S.Board {...canvasProps()} ref={canvas} />
+      <S.Board {...drawingProps} ref={canvas} />
     </>
   );
 };

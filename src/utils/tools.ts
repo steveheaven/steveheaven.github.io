@@ -70,21 +70,30 @@ export const insertImage = ({
   canvas,
   files,
 }: Omit<DrawLineParams, "color" | "stroke">) => {
-  if (!canvas.current) {
+  const cnv = canvas.current;
+  if (!cnv) {
     return;
   }
-  const ctx = canvas.current?.getContext("2d");
+  const ctx = cnv?.getContext("2d");
 
   if (ctx) {
-    // const img = new Image();
+    const img = new Image();
     console.log(newMousePosition);
     console.log(originalMousePosition);
-    // img.onload = function () {
-    //   ctx.drawImage(img, originalMousePosition?.x, 0);
-    // };
-    // img.src = URL.createObjectURL(files[0]);
-
-    // renderImageToCanvas(dataUrl as string, ctx);
+    img.onload = function () {
+      const factor =
+        (cnv.width / img.naturalWidth) * img.naturalHeight > window.innerHeight
+          ? cnv.height / img.naturalHeight
+          : cnv.width / img.naturalWidth;
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        img.naturalWidth * factor,
+        img.naturalHeight * factor
+      );
+    };
+    img.src = URL.createObjectURL(files[0]);
   }
 };
 

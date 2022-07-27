@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 export const Board = styled.canvas`
   background-color: white;
-  width: 80%;
+  min-width: 80vw;
   position: absolute;
   height: 100vh;
-  top: 15vh;
+  top: 10vh;
   bottom: 0;
   border-radius: 5px;
   cursor: crosshair;
@@ -26,6 +26,6 @@ export const ClearButton = styled(Button)<ButtonProps<any>>`
 export const NavWrap = styled.div`
   display: flex;
   align-items: center;
-  height: 80px;
-  justify-content: space-betwen;
+  height: 50px;
+  justify-content: space-between;
 `;
