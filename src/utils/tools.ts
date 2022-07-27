@@ -78,8 +78,6 @@ export const insertImage = ({
 
   if (ctx) {
     const img = new Image();
-    console.log(newMousePosition);
-    console.log(originalMousePosition);
     img.onload = function () {
       const factor =
         (cnv.width / img.naturalWidth) * img.naturalHeight > window.innerHeight

@@ -81,7 +81,6 @@ export const Navbar: FC<Props> = ({
       meta: (
         <S.ImageInput
           onChange={(e) => {
-            // console.log(e.target.files);
             const newMousePosition = getCoordinates(e)(canvas) || {
               x: 0,
               y: 0,
