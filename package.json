@@ -1,7 +1,7 @@
 {
   "name": "peer-paint-frontend",
   "version": "0.1.0",
-  "homepage": "https://steveheaven.github.io",
+  "homepage": "https://steveheaven.github.io/peer-paint",
   "private": true,
   "dependencies": {
     "@mantine/core": "^4.2.12",
