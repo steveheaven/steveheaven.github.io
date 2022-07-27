@@ -1,7 +1,7 @@
 {
   "name": "peer-paint-frontend",
   "version": "0.1.0",
-  "homepage": "https://steveheaven.github.io/react-gh-pages",
+  "homepage": "https://steveheaven.github.io",
   "private": true,
   "dependencies": {
     "@mantine/core": "^4.2.12",
